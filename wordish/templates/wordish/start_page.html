@@ -1,0 +1,25 @@
+<!-- wordish/templates/wordish/start_page.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'wordish/css/styles.css' %}">
+    <title>Start Wordish</title>
+</head>
+<body>
+    <h1 id="Status">{{ message }}</h1>
+    <h2 id="message">{{ error }}</h2>
+
+    <form action="{% url 'start_page' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" id="target_text" name="target_text" placeholder="Enter target word">
+        <button type="submit" id="start_button">Start Game</button>
+    </form>
+
+    <form action="{% url 'game_page' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="random_word" value="true">
+        <button type="submit" id="random_button">Start with Random Word</button>
+    </form>
+</body>
+</html>

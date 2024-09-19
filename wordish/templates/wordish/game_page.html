@@ -1,0 +1,35 @@
+<!-- wordish/templates/wordish/game_page.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'wordish/css/styles.css' %}">
+    <title>Wordish Game</title>
+</head>
+<body>
+    <h1>Wordish Game</h1>
+
+    <h1 id="status">{{ message }}</h1>
+    <h2 id="message">{{ error }}</h2>
+
+    <form action="{% url 'game_page' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="game_state" value="{{ game_state }}">
+        <input type="text" id="guess_text" name="guess" placeholder="Enter your guess" maxlength="5">
+        <button type="submit" id="guess_button">Submit Guess</button>
+    </form>
+
+    <h2>Attempts left: {{ game_state.attempts_left }}</h2>
+
+    <!-- Display guesses -->
+    <table>
+        {% for attempt in game_state.guesses %}
+            <tr>
+                {% for color, letter,idForFrontend in attempt %}
+                    <td id="{{ idForFrontend }}" class="{{ color }}">{{ letter }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
